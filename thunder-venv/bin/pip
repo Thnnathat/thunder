@@ -1,4 +1,4 @@
-#!/home/keang/Documents/coding/python/thunder/thunder-venv/bin/python3
+#!/home/keang/Documents/coding/python/thunder/thunder-venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
