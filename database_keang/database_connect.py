@@ -7,6 +7,7 @@ class Connector:
         self.database = kwargs["database"]
         self.dictionary = kwargs["dictionary"]
         
+        
     @property
     def conn(self):
         try:

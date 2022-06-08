@@ -1,5 +1,5 @@
-from database_manager import DatabaseManagement
-from database_selector import Selector
+from .database_manager import DatabaseManagement
+from .database_selector import Selector
 
 class Database(DatabaseManagement, Selector):
     def __init__(self, **kwargs):
