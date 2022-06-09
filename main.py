@@ -1,8 +1,12 @@
 from fastapi import FastAPI
+from h11 import Data
 import uvicorn
 from pydantic import BaseModel
 from typing import Dict
+from database_main import Activity
 from math import pi
+
+database = Activity(user="root", password="2362539", database="sample", dictionary=True)
 
 app = FastAPI()
 class User(BaseModel):
@@ -36,6 +40,11 @@ async def circle(r: float):
 async def circle_area(r: float):
     res = pi*r*r
     return {"area_circle": f"Area circle: {res:.2f}"}
+
+@app.get("/{table}")
+async def select(table):
+    se = database.activity_select_all(table)
+    return se
 
 @app.post("/account_admin")
 async def account(user: User):
