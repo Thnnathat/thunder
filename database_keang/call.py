@@ -1,7 +1,8 @@
-from .database_manager import DatabaseManagement
-from .database_selector import Selector
+from .manager import DatabaseManagement
+from .selector import Selector
+from .field import Field
 
-class Database(DatabaseManagement, Selector):
+class Database(DatabaseManagement, Selector, Field):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         

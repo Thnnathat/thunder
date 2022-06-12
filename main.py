@@ -1,50 +1,45 @@
+from re import A
 from fastapi import FastAPI
-from h11 import Data
 import uvicorn
 from pydantic import BaseModel
-from typing import Dict
-from database_main import Activity
-from math import pi
+from callback import Callback
 
-database = Activity(user="root", password="2362539", database="sample", dictionary=True)
+activity = Callback(user="root", password="2362539", database="user", dictionary=True)
 
 app = FastAPI()
 class User(BaseModel):
-   ID: int
    username: str
+   first_name: str
+   last_name: str
    password: str
-   admin: Dict[str, str] = {"username": "admin", "password": "admin"}
 
+@app.get("/database")
+async def database():
+    data = activity.select(table_name="hardware_control")
+    
 @app.get("/")
 async def connect():
     return {"Hello" : "World"} 
 
-@app.get("/myname")
-async def myname(name):
-    name = {"name": name}
-    return name
-
-@app.get("/area")
-async def area(w: int, h: int):
-    data = 1/2*w*h
-    print(data)
+@app.get("/sample")
+async def show_table():
+    data = activity.show_table()
     return data
 
-@app.get("/circle")
-async def circle(r: float):
-    cir = 2*pi*r
-    data = {"circumferance": f"Circumferance: {cir:.2f}"}
+@app.get("/sample/{table_name}")
+async def select(table_name):
+    data = activity.select(table_name)
     return data
 
-@app.get("/circle_area")
-async def circle_area(r: float):
-    res = pi*r*r
-    return {"area_circle": f"Area circle: {res:.2f}"}
+@app.get("/user/change")
+async def change(Id, username, password):
+   data = activity.update(table_name="account", Id=Id, username=username, password=password)
+   print(data)
 
-@app.get("/{table}")
-async def select(table):
-    se = database.activity_select_all(table)
-    return se
+@app.post("/register")
+async def register(user: User):
+    data = activity.register(user, table_name="account") 
+    return data
 
 @app.post("/account_admin")
 async def account(user: User):

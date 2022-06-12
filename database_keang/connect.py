@@ -7,14 +7,14 @@ class Connector:
         self.database = kwargs["database"]
         self.dictionary = kwargs["dictionary"]
         
-        
     @property
     def conn(self):
         try:
             mydb = mysql.connector.connect(
                 host="localhost",
                 user=self.user,
-                password=self.password
+                password=self.password,
+                database=self.database
             )
         except:
             print("Error at connector")

@@ -1,4 +1,4 @@
-from .database_connect import Connector
+from .connect import Connector
 
 class DatabaseManagement(Connector):
     def __init__(self, **kwargs):
